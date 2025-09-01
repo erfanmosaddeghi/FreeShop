@@ -1,5 +1,6 @@
 using Modules.Orders.Application.Abstractions.CQRS;
+using Modules.Orders.Application.Abstractions.CQRS2;
 
 namespace Modules.Orders.Application.Commands.RemoveLine;
 
-public sealed record RemoveLineCommand(long OrderId, int LineNo) : ICommand<bool>;
+public sealed record RemoveLineCommand(Guid OrderId, int LineNo) : ITransactionalCommand<bool>;

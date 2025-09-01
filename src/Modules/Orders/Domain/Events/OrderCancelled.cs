@@ -3,7 +3,7 @@ using SharedKernel.Domain;
 namespace Modules.Orders.Domain.Events;
 
 public sealed record OrderCancelled(
-    long OrderId,
+    Guid OrderId,
     string? Reason,
     DateTimeOffset CancelledAtUtc
 ) : IDomainEvent

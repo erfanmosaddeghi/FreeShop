@@ -1,4 +1,5 @@
 using Modules.Orders.Application.Abstractions.CQRS;
+using Modules.Orders.Application.Abstractions.CQRS2;
 
 namespace Modules.Orders.Application.Commands.PlaceOrder;
 
@@ -6,6 +7,5 @@ public sealed record PlaceOrderLine(Guid ProductId, int Quantity, long UnitPrice
 
 public sealed record PlaceOrderCommand(
     long CustomerId,
-    int Currency,
     IReadOnlyList<PlaceOrderLine> Lines
-) : ICommand<long>;
+) : ITransactionalCommand<Guid>;

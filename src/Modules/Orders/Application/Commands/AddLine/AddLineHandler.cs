@@ -1,9 +1,10 @@
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 
 namespace Modules.Orders.Application.Commands.AddLine;
 
-public sealed class AddLineHandler : ICommandHandler<AddLineCommand, bool>
+public sealed class AddLineHandler : IRequestHandler<AddLineCommand, bool>
 {
     private readonly IOrdersRepository _orders;
 

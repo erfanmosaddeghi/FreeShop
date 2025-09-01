@@ -1,9 +1,10 @@
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 
 namespace Modules.Orders.Application.Commands.RemoveLine;
 
-public sealed class RemoveLineHandler : ICommandHandler<RemoveLineCommand, bool>
+public sealed class RemoveLineHandler : IRequestHandler<RemoveLineCommand, bool>
 {
     private readonly IOrdersRepository _orders;
 

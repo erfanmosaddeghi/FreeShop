@@ -1,9 +1,10 @@
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 
 namespace Modules.Orders.Application.Commands.UpdateLine;
 
-public sealed class UpdateLineHandler : ICommandHandler<UpdateLineCommand, bool>
+public sealed class UpdateLineHandler : IRequestHandler<UpdateLineCommand, bool>
 {
     private readonly IOrdersRepository _orders;
 

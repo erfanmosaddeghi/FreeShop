@@ -1,16 +1,17 @@
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 using Modules.Orders.Domain.Aggregates;
 
 namespace Modules.Orders.Application.Commands.PlaceOrder;
 
-public sealed class PlaceOrderHandler : ICommandHandler<PlaceOrderCommand, long>
+public sealed class PlaceOrderHandler : IRequestHandler<PlaceOrderCommand, Guid>
 {
     private readonly IOrdersRepository _orders;
 
     public PlaceOrderHandler(IOrdersRepository orders) => _orders = orders;
 
-    public async Task<long> Handle(PlaceOrderCommand command, CancellationToken ct)
+    public async Task<Guid> Handle(PlaceOrderCommand command, CancellationToken ct)
     {
         if (command.Lines is null || command.Lines.Count == 0)
             throw new InvalidOperationException("Order lines are required.");

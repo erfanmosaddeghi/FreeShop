@@ -1,10 +1,11 @@
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 
 
 namespace Modules.Orders.Application.Commands.CancelOrder;
 
-public sealed class CancelOrderHandler : ICommandHandler<CancelOrderCommand, bool>
+public sealed class CancelOrderHandler : IRequestHandler<CancelOrderCommand, bool>
 {
     private readonly IOrdersRepository _orders;
 

@@ -3,9 +3,15 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Orders\Api\Modules.Orders.Api.csproj" />
     <ProjectReference Include="..\..\Modules\Orders\Infrastructure\Modules.Orders.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Orders\Application\Modules.Orders.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Orders\Migrations.PostgreSql\Modules.Orders.Migrations.PostgreSql.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.4" />
   </ItemGroup>
 

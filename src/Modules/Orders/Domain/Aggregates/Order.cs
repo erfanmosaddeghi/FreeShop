@@ -6,7 +6,7 @@ using Modules.Orders.Domain.Exceptions;
 
 namespace Modules.Orders.Domain.Aggregates;
 
-public sealed class Order : AggregateRoot<long>
+public sealed class Order : AggregateRoot<Guid>
 {
     public long CustomerId { get; private set; }
 
@@ -27,13 +27,12 @@ public sealed class Order : AggregateRoot<long>
     {
         if (customerId <= 0) throw new ArgumentOutOfRangeException(nameof(customerId));
 
+        Id = Guid.NewGuid();
         CustomerId = customerId;
         CreatedAt = nowUtc;
         Status = OrderStatus.Created;
 
-        Raise(new OrderPlaced(0 /* filled by infra on save */, CustomerId, CreatedAt));
-        // نکته: OrderId در ایونت بالا بعداً هنگام Publish می‌تواند با Id پر شود (پس از Persistence)
-        // یا می‌توانی همین‌جا بعد از set Id در EF، ایونت را دوباره رفرنس دهی (الگوی متداول: Publish after SaveChanges).
+        Raise(new OrderPlaced(Id, CustomerId, CreatedAt, Lines));
     }
 
     public static Order Create(long customerId, DateTimeOffset nowUtc)

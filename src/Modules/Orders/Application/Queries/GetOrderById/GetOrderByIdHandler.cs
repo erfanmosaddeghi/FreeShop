@@ -8,13 +8,13 @@ namespace Modules.Orders.Application.Queries.GetOrderById;
 
 public sealed class GetOrderByIdHandler : IQueryHandler<GetOrderByIdQuery, OrderDTO?>
 {
-    private readonly IOrdersRepository _orders;
+    private readonly IOrderReadRepository _orders;
 
-    public GetOrderByIdHandler(IOrdersRepository orders) => _orders = orders;
+    public GetOrderByIdHandler(IOrderReadRepository orders) => _orders = orders;
 
     public async Task<OrderDTO?> Handle(GetOrderByIdQuery query, CancellationToken ct)
     {
-        var entity = await _orders.GetAsync(query.Id, ct);
+        var entity = await _orders.GetByIdAsync(query.Id, ct);
         return entity?.Adapt<OrderDTO>();
     }
 }

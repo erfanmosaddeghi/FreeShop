@@ -1,9 +1,10 @@
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 
 namespace Modules.Orders.Application.Commands.PayOrder;
 
-public sealed class PayOrderHandler : ICommandHandler<PayOrderCommand, bool>
+public sealed class PayOrderHandler : IRequestHandler<PayOrderCommand, bool>
 {
     private readonly IOrdersRepository _orders;
 

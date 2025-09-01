@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Modules.Orders.Api.Endpoints;
 
 namespace Modules.Orders.Api;
 
@@ -8,7 +9,7 @@ public static class OrdersApi
     public static WebApplication MapOrdersApi(this WebApplication app)
     {
         var group = app.MapGroup("/api/orders").WithTags("Orders");
-        group.MapGet("/ping", () => Results.Ok(new { ok = true, module = "orders" }));
+        group.MapOrdersEndpoints();
         return app;
     }
 }
