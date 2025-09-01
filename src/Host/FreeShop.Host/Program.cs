@@ -1,4 +1,5 @@
 using Modules.Orders.Api;
+using Modules.Orders.Application.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+OrderMappingConfig.RegisterMappings();
 app.UseSwagger();
 app.UseSwaggerUI();
 
