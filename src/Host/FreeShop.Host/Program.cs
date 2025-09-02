@@ -31,7 +31,7 @@ app.UseExceptionHandler(errApp =>
             var details = new
             {
                 type = "https://tools.ietf.org/html/rfc7807",
-                title = "Validation failed",
+                title = vex.Message,
                 status = 400,
                 errors = vex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
             };
@@ -44,6 +44,7 @@ app.UseExceptionHandler(errApp =>
         {
             type = "https://tools.ietf.org/html/rfc7807",
             title = "Unhandled error",
+            message = ex.Message,
             status = 500
         };
         await context.Response.WriteAsJsonAsync(generic);

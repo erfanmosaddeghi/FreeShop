@@ -1,9 +1,8 @@
 namespace Modules.Orders.Application.DTOs;
 
 public sealed record OrderDTO(
-    long Id,
+    Guid Id,
     long CustomerId,
-    string Currency,
     string Status,
     DateTimeOffset CreatedAt,
     DateTimeOffset? PaidAt,

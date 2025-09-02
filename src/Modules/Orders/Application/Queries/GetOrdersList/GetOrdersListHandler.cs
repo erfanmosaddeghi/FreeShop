@@ -1,4 +1,5 @@
 using Mapster;
+using MediatR;
 using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.DTOs;
 using Modules.Orders.Application.Interfaces;
@@ -6,7 +7,7 @@ using Modules.Orders.Application.Interfaces;
 
 namespace Modules.Orders.Application.Queries.GetOrdersList;
 
-public sealed class GetOrdersListHandler : IQueryHandler<GetOrdersListQuery, IReadOnlyList<OrderDTO>>
+public sealed class GetOrdersListHandler : IRequestHandler<GetOrdersListQuery, IReadOnlyList<OrderDTO>>
 {
     private readonly IOrderReadRepository _orders;
 

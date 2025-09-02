@@ -10,8 +10,6 @@ public static class OrderMappingConfig
     public static void RegisterMappings()
     {
         TypeAdapterConfig<OrderLine, OrderLineDTO>.NewConfig();
-
-        TypeAdapterConfig<Order, OrderDTO>.NewConfig()
-            .Map(dest => dest.Status, src => src.Status.ToString());
+        TypeAdapterConfig<Order, OrderDTO>.NewConfig().Map(dest => dest.Status, src => src.Status.ToString());
     }
 }

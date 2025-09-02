@@ -2,6 +2,7 @@ using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Modules.Orders.Application.DTOs;
 using Modules.Orders.Application.Ports;
+using Modules.Orders.Domain.Aggregates;
 
 namespace Modules.Orders.Infrastructure.ReadModel;
 
@@ -24,6 +25,7 @@ public sealed class OrderReadRepository : IOrderReadRepository
             .Skip(skip)
             .Take(take)
             .Include(o => o.Lines)
+            .ProjectToType<OrderDTO>()
             .ToListAsync(ct);
 
         return reads.Adapt<List<OrderDTO>>();

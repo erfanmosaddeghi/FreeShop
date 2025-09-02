@@ -3,9 +3,16 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.Orders.Application.Commands.AddLine;
+using Modules.Orders.Application.Commands.CancelOrder;
+using Modules.Orders.Application.Commands.PayOrder;
 using Modules.Orders.Application.Commands.PlaceOrder;
+using Modules.Orders.Application.Commands.RemoveLine;
+using Modules.Orders.Application.Commands.UpdateLine;
 using Modules.Orders.Application.Interfaces;
 using Modules.Orders.Application.Ports;
+using Modules.Orders.Application.Queries.GetOrderById;
+using Modules.Orders.Application.Queries.GetOrdersList;
 using Modules.Orders.Application.Validation;
 using Modules.Orders.Infrastructure.Events;
 using Modules.Orders.Infrastructure.Persistence;
@@ -62,7 +69,7 @@ public static class OrdersInfrastructureExtensions
         services.AddScoped<IDomainEventDispatcher, InProcessDomainEventDispatcher>();
 
         services.AddMediatR(cfg2 => cfg2.RegisterServicesFromAssemblyContaining<PlaceOrderCommand>());
-
+        
         services.AddValidatorsFromAssemblyContaining<PlaceOrderCommandValidator>();
         services.AddScoped<IDomainEventHandler<Modules.Orders.Domain.Events.OrderPlaced>, OrderPlacedProjection>();
         services.AddScoped<IDomainEventHandler<Modules.Orders.Domain.Events.OrderPaid>, OrderPaidProjection>();

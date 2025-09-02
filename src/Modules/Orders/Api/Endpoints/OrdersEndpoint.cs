@@ -40,31 +40,31 @@ public static class OrdersEndpoints
             return Results.Ok(res);
         });
 
-        g.MapPost("/{id:long}/lines", async (Guid id, AddLineRequest req, IMediator mediator, CancellationToken ct) =>
+        g.MapPost("/{id:guid}/lines", async (Guid id, AddLineRequest req, IMediator mediator, CancellationToken ct) =>
         {
             var ok = await mediator.Send(new AddLineCommand(id, req.ProductId, req.Quantity, req.UnitPriceRial), ct);
             return ok ? Results.NoContent() : Results.NotFound();
         });
 
-        g.MapPut("/{id:long}/lines/{lineNo:int}", async (Guid id, int lineNo, UpdateLineRequest req, IMediator mediator, CancellationToken ct) =>
+        g.MapPut("/{id:guid}/lines/{lineNo:int}", async (Guid id, int lineNo, UpdateLineRequest req, IMediator mediator, CancellationToken ct) =>
         {
             var ok = await mediator.Send(new UpdateLineCommand(id, lineNo, req.Quantity, req.UnitPriceRial), ct);
             return ok ? Results.NoContent() : Results.NotFound();
         });
 
-        g.MapDelete("/{id:long}/lines/{lineNo:int}", async (Guid id, int lineNo, IMediator mediator, CancellationToken ct) =>
+        g.MapDelete("/{id:guid}/lines/{lineNo:int}", async (Guid id, int lineNo, IMediator mediator, CancellationToken ct) =>
         {
             var ok = await mediator.Send(new RemoveLineCommand(id, lineNo), ct);
             return ok ? Results.NoContent() : Results.NotFound();
         });
 
-        g.MapPost("/{id:long}/pay", async (Guid id, IMediator mediator, CancellationToken ct) =>
+        g.MapPost("/{id:guid}/pay", async (Guid id, IMediator mediator, CancellationToken ct) =>
         {
             var ok = await mediator.Send(new PayOrderCommand(id), ct);
             return ok ? Results.NoContent() : Results.NotFound();
         });
 
-        g.MapPost("/{id:long}/cancel", async (Guid id, CancelOrderRequest req, IMediator mediator, CancellationToken ct) =>
+        g.MapPost("/{id:guid}/cancel", async (Guid id, CancelOrderRequest req, IMediator mediator, CancellationToken ct) =>
         {
             var ok = await mediator.Send(new CancelOrderCommand(id, req.Reason), ct);
             return ok ? Results.NoContent() : Results.NotFound();
