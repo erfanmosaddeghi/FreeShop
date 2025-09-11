@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Abstractions.CQRS2;
 using Modules.Orders.Application.Ports;
 using Modules.Orders.Infrastructure.Persistence;

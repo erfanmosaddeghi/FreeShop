@@ -1,6 +1,5 @@
 using Mapster;
 using MediatR;
-using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.DTOs;
 using Modules.Orders.Application.Interfaces;
 

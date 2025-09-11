@@ -1,4 +1,3 @@
-using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Abstractions.CQRS2;
 
 namespace Modules.Orders.Application.Commands.PayOrder;

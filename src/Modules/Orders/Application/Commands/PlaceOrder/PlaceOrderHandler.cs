@@ -1,5 +1,4 @@
 using MediatR;
-using Modules.Orders.Application.Abstractions.CQRS;
 using Modules.Orders.Application.Interfaces;
 using Modules.Orders.Domain.Aggregates;
 

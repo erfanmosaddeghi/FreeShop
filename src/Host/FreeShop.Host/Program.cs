@@ -2,7 +2,6 @@ using Modules.Orders.Api;
 using Modules.Orders.Application.Mapping;
 using Modules.Orders.Application;
 using Modules.Orders.Infrastructure.Extensions;
-using Modules.Orders.Application.Abstractions.CQRS;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using FluentValidation;

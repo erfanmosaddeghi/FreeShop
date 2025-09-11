@@ -15,14 +15,16 @@ public sealed class EfUnitOfWork : IUnitOfWork
 
     public async Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
-        // 1) Save write-side
         var result = await _db.SaveChangesAsync(ct);
 
-        var events = _db.ChangeTracker
-            .Entries<AggregateRoot<Guid>>()
-            .SelectMany(e => e.Entity.DomainEvents)
-            .ToArray();
-
+        var aggregates = _db.ChangeTracker
+                                         .Entries<AggregateRoot<Guid>>()
+                                         .Select(e => e.Entity).ToList();
+        
+        var events = aggregates.SelectMany(e => e.DomainEvents).ToArray();
+        
+        foreach (var aggregate in aggregates) aggregate.ClearEvents(); // remove events
+        
         if (events.Length > 0)
             await _dispatcher.DispatchAsync(events, ct);
 
