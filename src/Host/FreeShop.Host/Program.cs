@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddOrdersInfrastructure(builder.Configuration);
 
 var app = builder.Build();
@@ -33,7 +32,7 @@ app.UseExceptionHandler(errApp =>
                 type = "https://tools.ietf.org/html/rfc7807",
                 title = vex.Message,
                 status = 400,
-                errors = vex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+                errors = vex.Errors.Select(e => $"{e.PropertyName}: {e.ErrorMessage }")
             };
             await context.Response.WriteAsJsonAsync(details);
             return;

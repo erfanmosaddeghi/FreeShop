@@ -21,6 +21,7 @@ public sealed class OrderReadRepository : IOrderReadRepository
     public async Task<IReadOnlyList<OrderDTO>> GetListAsync(int skip, int take, CancellationToken ct)
     {
         var reads = await _db.Orders
+            .AsNoTracking()
             .OrderByDescending(o => o.Id)
             .Skip(skip)
             .Take(take)
@@ -28,6 +29,6 @@ public sealed class OrderReadRepository : IOrderReadRepository
             .ProjectToType<OrderDTO>()
             .ToListAsync(ct);
 
-        return reads.Adapt<List<OrderDTO>>();
+        return reads;
     }
 }

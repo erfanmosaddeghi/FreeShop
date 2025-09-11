@@ -22,7 +22,7 @@ public sealed class OrdersDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(OrdersDbContext).Assembly);
 
-        var orderId = modelBuilder.Entity<Order>().Property(p => p.Id);
+        // var orderId = modelBuilder.Entity<Order>().Property(p => p.Id);
 
         // if (Database.IsNpgsql())
         // {
@@ -36,19 +36,7 @@ public sealed class OrdersDbContext : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var aggregates = ChangeTracker.Entries()
-            .Where(e => e.Entity is AggregateRoot<long>)
-            .Select(e => (AggregateRoot<long>)e.Entity)
-            .ToList();
-
-        var events = aggregates.SelectMany(a => a.DomainEvents).ToList();
-        foreach (var a in aggregates) a.ClearEvents();
-
-        var result = await base.SaveChangesAsync(cancellationToken);
-
-        if (events.Count > 0)
-            await _dispatcher.DispatchAsync(events, cancellationToken);
-
+        var result = await base.SaveChangesAsync(cancellationToken); 
         return result;
     }
 }

@@ -2,6 +2,7 @@ using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Modules.Orders.Api.Contracts;
 using Modules.Orders.Application.Commands.AddLine;
@@ -21,7 +22,7 @@ public static class OrdersEndpoints
     {
         var g = routes.MapGroup("/api/orders");
 
-        g.MapPost("/", async (PlaceOrderRequest req, IMediator mediator, CancellationToken ct) =>
+        g.MapPost("/", async ([FromBody]PlaceOrderRequest req, IMediator mediator, CancellationToken ct) =>
         {
             var cmd = new PlaceOrderCommand(req.CustomerId, req.Lines.Select(l => new PlaceOrderLine(l.ProductId, l.Quantity, l.UnitPriceRial)).ToList());
             var id = await mediator.Send(cmd, ct);

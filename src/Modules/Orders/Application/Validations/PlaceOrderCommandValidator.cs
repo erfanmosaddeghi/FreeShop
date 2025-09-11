@@ -7,7 +7,7 @@ public sealed class PlaceOrderCommandValidator : AbstractValidator<PlaceOrderCom
 {
     public PlaceOrderCommandValidator()
     {
-        RuleFor(x => x.CustomerId).GreaterThan(0);
+        RuleFor(x => x.CustomerId).GreaterThan(0).WithMessage("Customer Id must be greater than 0");
         RuleFor(x => x.Lines).NotEmpty();
         RuleForEach(x => x.Lines).ChildRules(line =>
         {

@@ -29,7 +29,6 @@ public static class OrdersInfrastructureExtensions
     public static IServiceCollection AddOrdersInfrastructure(this IServiceCollection services, IConfiguration cfg)
     {
         var provider = cfg["Db:Provider"]?.ToLowerInvariant() ?? "npgsql";
-
         if (provider == "sqlserver")
         {
             var cs = cfg.GetConnectionString("OrdersSqlServer")!;
@@ -62,20 +61,27 @@ public static class OrdersInfrastructureExtensions
                     b.MigrationsAssembly("Modules.Orders.Migrations.PostgreSql");
                 }));
         }
-
+        
+        
+        services.AddMediatR(cfg2 => cfg2.RegisterServicesFromAssemblyContaining<PlaceOrderCommand>());
+        services.AddValidatorsFromAssemblyContaining<PlaceOrderCommandValidator>();
         services.AddScoped<IOrdersRepository, EfOrdersRepository>();
         services.AddScoped<IOrderReadRepository, OrderReadRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         services.AddScoped<IDomainEventDispatcher, InProcessDomainEventDispatcher>();
-
-        services.AddMediatR(cfg2 => cfg2.RegisterServicesFromAssemblyContaining<PlaceOrderCommand>());
         
-        services.AddValidatorsFromAssemblyContaining<PlaceOrderCommandValidator>();
         services.AddScoped<IDomainEventHandler<Modules.Orders.Domain.Events.OrderPlaced>, OrderPlacedProjection>();
         services.AddScoped<IDomainEventHandler<Modules.Orders.Domain.Events.OrderPaid>, OrderPaidProjection>();
         services.AddScoped<IDomainEventHandler<Modules.Orders.Domain.Events.OrderCancelled>, OrderCancelledProjection>();
 
+        #region PipeLinesMediatR
+        // Sort in pipelines is important
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
+        
+
+        #endregion
+        
         return services;
     }
 }
